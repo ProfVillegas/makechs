@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Livewire\AuthorsTable;
+use App\Livewire\PostsTable;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,4 +21,13 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/authors', AuthorsTable::class)->name('authors.index');
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/authors', AuthorsTable::class)->name('authors.index');
+    Route::get('/authors/{author}/posts', PostsTable::class)->name('authors.posts');
+});
 require __DIR__.'/auth.php';
